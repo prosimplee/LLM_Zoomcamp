@@ -1,4 +1,4 @@
-Regarding intro in LLM_Zoomcamp:
+Regarding intro in the LLM_Zoomcamp:
 I recently learned about Large Language Models (LLMs) and Retrieval-Augmented Generation (RAG). 
 For a homework project, I implemented a solution using Elasticsearch to fetch documents based on user questions. 
 By integrating Elasticsearch, I was able to retrieve relevant information quickly and accurately. 
