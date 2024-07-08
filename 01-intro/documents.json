@@ -1,0 +1,247 @@
+[
+  {
+    "course": "data-engineering-zoomcamp",
+    "documents": [
+      {
+        "text": "The MacOS setup instruction (https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/05-batch/setup/macos.md#installing-java) for setting the JAVA_HOME environment variable is for Intel-based Macs which have a default install location at /usr/local/. If you have an Apple Silicon mac, you will have to set JAVA_HOME to /opt/homebrew/, specifically in your .bashrc or .zshrc:\nexport JAVA_HOME=\"/opt/homebrew/opt/openjdk/bin\"\nexport PATH=\"$JAVA_HOME:$PATH\"\nConfirm that your path was correctly set by running the command: which java\nYou should expect to see the output:\n/opt/homebrew/opt/openjdk/bin/java\nReference: https://docs.brew.sh/Installation",
+        "section": "Module 6: streaming with kafka",
+        "question": "Setting JAVA_HOME with Homebrew on Apple Silicon"
+      },
+      {
+        "text": "Check Docker Compose File:\nEnsure that your docker-compose.yaml file is correctly configured with the necessary details for the \"control-center\" service. Check the service name, image name, ports, volumes, environment variables, and any other configurations required for the container to start.\nOn Mac OSX 12.2.1 (Monterey) I could not start the kafka control center. I opened Docker Desktop and saw docker images still running from week 4, which I did not see when I typed \u201cdocker ps.\u201d I deleted them in docker desktop and then had no problem starting up the kafka environment.",
+        "section": "Module 6: streaming with kafka",
+        "question": "Could not start docker image \u201ccontrol-center\u201d from the docker-compose.yaml file."
+      },
+      {
+        "text": "Solution from Alexey: create a virtual environment and run requirements.txt and the python files in that environment.\nTo create a virtual env and install packages (run only once)\npython -m venv env\nsource env/bin/activate\npip install -r ../requirements.txt\nTo activate it (you'll need to run it every time you need the virtual env):\nsource env/bin/activate\nTo deactivate it:\ndeactivate\nThis works on MacOS, Linux and Windows - but for Windows the path is slightly different (it's env/Scripts/activate)\nAlso the virtual environment should be created only to run the python file. Docker images should first all be up and running.",
+        "section": "Module 6: streaming with kafka",
+        "question": "Module \u201ckafka\u201d not found when trying to run producer.py"
+      },
+      {
+        "text": "ImportError: DLL load failed while importing cimpl: The specified module could not be found\nVerify Python Version:\nMake sure you are using a compatible version of Python with the Avro library. Check the Python version and compatibility requirements specified by the Avro library documentation.\n... you may have to load librdkafka-5d2e2910.dll in the code. Add this before importing avro:\nfrom ctypes import CDLL\nCDLL(\"C:\\\\Users\\\\YOUR_USER_NAME\\\\anaconda3\\\\envs\\\\dtcde\\\\Lib\\\\site-packages\\\\confluent_kafka.libs\\librdkafka-5d2e2910.dll\")\nIt seems that the error may occur depending on the OS and python version installed.\nALTERNATIVE:\nImportError: DLL load failed while importing cimpl\n\u2705SOLUTION: $env:CONDA_DLL_SEARCH_MODIFICATION_ENABLE=1 in Powershell.\nYou need to set this DLL manually in Conda Env.\nSource: https://githubhot.com/repo/confluentinc/confluent-kafka-python/issues/1186?page=2",
+        "section": "Module 6: streaming with kafka",
+        "question": "Error importing cimpl dll when running avro examples"
+      },
+      {
+        "text": "\u2705SOLUTION: pip install confluent-kafka[avro].\nFor some reason, Conda also doesn't include this when installing confluent-kafka via pip.\nMore sources on Anaconda and confluent-kafka issues:\nhttps://github.com/confluentinc/confluent-kafka-python/issues/590\nhttps://github.com/confluentinc/confluent-kafka-python/issues/1221\nhttps://stackoverflow.com/questions/69085157/cannot-import-producer-from-confluent-kafka",
+        "section": "Module 6: streaming with kafka",
+        "question": "ModuleNotFoundError: No module named 'avro'"
+      },
+      {
+        "text": "If you get an error while running the command python3 stream.py worker\nRun pip uninstall kafka-python\nThen run pip install kafka-python==1.4.6\nWhat is the use of  Redpanda ?\nRedpanda: Redpanda is built on top of the Raft consensus algorithm and is designed as a high-performance, low-latency alternative to Kafka. It uses a log-centric architecture similar to Kafka but with different underlying principles.\nRedpanda is a powerful, yet simple, and cost-efficient streaming data platform that is compatible with Kafka\u00ae APIs while eliminating Kafka complexity.",
+        "section": "Module 6: streaming with kafka",
+        "question": "Error while running python3 stream.py worker"
+      },
+      {
+        "text": "Got this error because the docker container memory was exhausted. The dta file was upto 800MB but my docker container does not have enough memory to handle that.\nSolution was to load the file in chunks with Pandas, then create multiple parquet files for each dat file I was processing. This worked smoothly and the issue was resolved.",
+        "section": "Module 6: streaming with kafka",
+        "question": "Negsignal:SIGKILL while converting dta files to parquet format"
+      },
+      {
+        "text": "Copy the file found in the Java example: data-engineering-zoomcamp/week_6_stream_processing/java/kafka_examples/src/main/resources/rides.csv",
+        "section": "Module 6: streaming with kafka",
+        "question": "data-engineering-zoomcamp/week_6_stream_processing/python/resources/rides.csv is missing"
+      },
+      {
+        "text": "tip:As the videos have low audio so I downloaded them and used VLC media player with putting the audio to the max 200% of original audio and the audio became quite good or try to use auto caption generated on Youtube directly.\nKafka Python Videos - Rides.csv\nThere is no clear explanation of the rides.csv data that the producer.py python programs use. You can find that here https://raw.githubusercontent.com/DataTalksClub/data-engineering-zoomcamp/2bd33e89906181e424f7b12a299b70b19b7cfcd5/week_6_stream_processing/python/resources/rides.csv.",
+        "section": "Module 6: streaming with kafka",
+        "question": "Kafka- python videos have low audio and hard to follow up"
+      },
+      {
+        "text": "If you have this error, it most likely that your kafka broker docker container is not working.\nUse docker ps to confirm\nThen in the docker compose yaml file folder, run docker compose up -d to start all the instances.",
+        "section": "Module 6: streaming with kafka",
+        "question": "kafka.errors.NoBrokersAvailable: NoBrokersAvailable"
+      },
+      {
+        "text": "Ankush said we can focus on horizontal scaling option.\n\u201cthink of scaling in terms of scaling from consumer end. Or consuming message via horizontal scaling\u201d",
+        "section": "Module 6: streaming with kafka",
+        "question": "Kafka homwork Q3, there are options that support scaling concept more than the others:"
+      },
+      {
+        "text": "If you get this error, know that you have not built your sparks and juypter images. This images aren\u2019t readily available on dockerHub.\nIn the spark folder, run ./build.sh from a bash cli to to build all images before running docker compose",
+        "section": "Module 6: streaming with kafka",
+        "question": "How to fix docker compose error: Error response from daemon: pull access denied for spark-3.3.1, repository does not exist or may require 'docker login': denied: requested access to the resource is denied"
+      },
+      {
+        "text": "Run this command in terminal in the same directory (/docker/spark):\nchmod +x build.sh",
+        "section": "Module 6: streaming with kafka",
+        "question": "Python Kafka: ./build.sh: Permission denied Error"
+      },
+      {
+        "text": "Restarting all services worked for me:\ndocker-compose down\ndocker-compose up",
+        "section": "Module 6: streaming with kafka",
+        "question": "Python Kafka: \u2018KafkaTimeoutError: Failed to update metadata after 60.0 secs.\u2019 when running stream-example/producer.py"
+      },
+      {
+        "text": "While following tutorial 13.2 , when running ./spark-submit.sh streaming.py, encountered the following error:\n\u2026\n24/03/11 09:48:36 INFO StandaloneAppClient$ClientEndpoint: Connecting to master spark://localhost:7077...\n24/03/11 09:48:36 INFO TransportClientFactory: Successfully created connection to localhost/127.0.0.1:7077 after 10 ms (0 ms spent in bootstraps)\n24/03/11 09:48:54 WARN GarbageCollectionMetrics: To enable non-built-in garbage collector(s) List(G1 Concurrent GC), users should configure it(them) to spark.eventLog.gcMetrics.youngGenerationGarbageCollectors or spark.eventLog.gcMetrics.oldGenerationGarbageCollectors\n24/03/11 09:48:56 INFO StandaloneAppClient$ClientEndpoint: Connecting to master spark://localhost:7077\u2026\n24/03/11 09:49:16 INFO StandaloneAppClient$ClientEndpoint: Connecting to master spark://localhost:7077...\n24/03/11 09:49:36 WARN StandaloneSchedulerBackend: Application ID is not initialized yet.\n24/03/11 09:49:36 ERROR StandaloneSchedulerBackend: Application has been killed. Reason: All masters are unresponsive! Giving up.\n\u2026\npy4j.protocol.Py4JJavaError: An error occurred while calling None.org.apache.spark.sql.SparkSession.\n: java.lang.IllegalStateException: Cannot call methods on a stopped SparkContext.\n\u2026\nSolution:\nDowngrade your local PySpark to 3.3.1 (same as Dockerfile)\nThe reason for the failed connection in my case was the mismatch of PySpark versions. You can see that from the logs of spark-master in the docker container.\nSolution 2:\nCheck what Spark version your local machine has\npyspark \u2013version\nspark-submit \u2013version\nAdd your version to SPARK_VERSION in build.sh",
+        "section": "Module 6: streaming with kafka",
+        "question": "Python Kafka: ./spark-submit.sh streaming.py - ERROR StandaloneSchedulerBackend: Application has been killed. Reason: All masters are unresponsive! Giving up."
+      },
+      {
+        "text": "Start a new terminal\nRun: docker ps\nCopy the CONTAINER ID of the spark-master container\nRun: docker exec -it <spark_master_container_id> bash\nRun: cat logs/spark-master.out\nCheck for the log when the error happened\nGoogle the error message from there",
+        "section": "Module 6: streaming with kafka",
+        "question": "Python Kafka: ./spark-submit.sh streaming.py - How to check why Spark master connection fails"
+      },
+      {
+        "text": "Make sure your java version is 11 or 8.\nCheck your version by:\njava --version\nCheck all your versions by:\n/usr/libexec/java_home -V\nIf you already have got java 11 but just not selected as default, select the specific version by:\nexport JAVA_HOME=$(/usr/libexec/java_home -v 11.0.22)\n(or other version of 11)",
+        "section": "Module 6: streaming with kafka",
+        "question": "Python Kafka: ./spark-submit.sh streaming.py Error: py4j.protocol.Py4JJavaError: An error occurred while calling None.org.apache.spark.api.java.JavaSparkContext."
+      },
+      {
+        "text": "In my set up, all of the dependencies listed in gradle.build were not installed in <project_name>-1.0-SNAPSHOT.jar.\nSolution:\nIn build.gradle file, I added the following at the end:\nshadowJar {\narchiveBaseName = \"java-kafka-rides\"\narchiveClassifier = ''\n}\nAnd then in the command line ran \u2018gradle shadowjar\u2019, and run the script from java-kafka-rides-1.0-SNAPSHOT.jar created by the shadowjar",
+        "section": "Module 6: streaming with kafka",
+        "question": "Java Kafka: <project_name>-1.0-SNAPSHOT.jar errors: package xxx does not exist even after gradle build"
+      },
+      {
+        "text": "confluent-kafka: `pip install confluent-kafka` or `conda install conda-forge::python-confluent-kafka`\nfastavro: pip install fastavro\nAbhirup Ghosh\nCan install Faust Library for Module 6 Python Version due to dependency conflicts?\nThe Faust repository and library is no longer maintained - https://github.com/robinhood/faust\nIf you do not know Java, you now have the option to follow the Python Videos 6.13 & 6.14 here https://www.youtube.com/watch?v=BgAlVknDFlQ&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=80  and follow the RedPanda Python version here https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/06-streaming/python/redpanda_example - NOTE: I highly recommend watching the Java videos to understand the concept of streaming but you can skip the coding parts - all will become clear when you get to the Python videos and RedPanda files.",
+        "section": "Module 6: streaming with kafka",
+        "question": "Python Kafka: Installing dependencies for python3 06-streaming/python/avro_example/producer.py"
+      },
+      {
+        "text": "In the project directory, run:\njava -cp build/libs/<jar_name>-1.0-SNAPSHOT.jar:out src/main/java/org/example/JsonProducer.java",
+        "section": "Module 6: streaming with kafka",
+        "question": "Java Kafka: How to run producer/consumer/kstreams/etc in terminal"
+      },
+      {
+        "text": "For example, when running JsonConsumer.java, got:\nConsuming form kafka started\nRESULTS:::0\nRESULTS:::0\nRESULTS:::0\nOr when running JsonProducer.java, got:\nException in thread \"main\" java.util.concurrent.ExecutionException: org.apache.kafka.common.errors.SaslAuthenticationException: Authentication failed\nSolution:\nMake sure in the scripts in src/main/java/org/example/ that you are running (e.g. JsonConsumer.java, JsonProducer.java), the StreamsConfig.BOOTSTRAP_SERVERS_CONFIG is the correct server url (e.g. europe-west3 from example vs europe-west2)\nMake sure cluster key and secrets are updated in src/main/java/org/example/Secrets.java (KAFKA_CLUSTER_KEY and KAFKA_CLUSTER_SECRET)",
+        "section": "Module 6: streaming with kafka",
+        "question": "Java Kafka: When running the producer/consumer/etc java scripts, no results retrieved or no message sent"
+      },
+      {
+        "text": "Situation: in VS Code, usually there will be a triangle icon next to each test. I couldn\u2019t see it at first and had to do some fixes.\nSolution:\n(Source)\nVS Code\n\u2192 Explorer (first icon on the left navigation bar)\n\u2192 JAVA PROJECTS (bottom collapsable)\n\u2192  icon next in the rightmost position to JAVA PROJECTS\n\u2192  clean Workspace\n\u2192 Confirm by clicking Reload and Delete\nNow you will be able to see the triangle icon next to each test like what you normally see in python tests.\nE.g.:\nYou can also add classes and packages in this window instead of creating files in the project directory",
+        "section": "Module 6: streaming with kafka",
+        "question": "Java Kafka: Tests are not picked up in VSCode"
+      },
+      {
+        "text": "In Confluent Cloud:\nEnvironment \u2192 default (or whatever you named your environment as) \u2192 The right navigation bar \u2192  \u201cStream Governance API\u201d \u2192  The URL under \u201cEndpoint\u201d\nAnd create credentials from Credentials section below it",
+        "section": "Module 6: streaming with kafka",
+        "question": "Confluent Kafka: Where can I find schema registry URL?"
+      },
+      {
+        "text": "You can check the version of your local spark using spark-submit --version. In the build.sh file of the Python folder, make sure that SPARK_VERSION matches your local version. Similarly, make sure the pyspark you pip installed also matches this version.",
+        "section": "Module 6: streaming with kafka",
+        "question": "How do I check compatibility of local and container Spark versions?"
+      },
+      {
+        "text": "According to https://github.com/dpkp/kafka-python/\n\u201cDUE TO ISSUES WITH RELEASES, IT IS SUGGESTED TO USE https://github.com/wbarnha/kafka-python-ng FOR THE TIME BEING\u201d\nUse pip install kafka-python-ng instead",
+        "section": "Project",
+        "question": "How to fix the error \"ModuleNotFoundError: No module named 'kafka.vendor.six.moves'\"?"
+      },
+      {
+        "text": "Each submitted project will be evaluated by 3 (three) randomly assigned students that have also submitted the project.\nYou will also be responsible for grading the projects from 3 fellow students yourself. Please be aware that: not complying to this rule also implies you failing to achieve the Certificate at the end of the course.\nThe final grade you get will be the median score of the grades you get from the peer reviewers.\nAnd of course, the peer review criteria for evaluating or being evaluated must follow the guidelines defined here.",
+        "section": "Project",
+        "question": "How is my capstone project going to be evaluated?"
+      },
+      {
+        "text": "There is only ONE project for this Zoomcamp. You do not need to submit or create two projects. There are simply TWO chances to pass the course. You can use the Second Attempt if you a) fail the first attempt b) do not have the time due to other engagements such as holiday or sickness etc. to enter your project into the first attempt.",
+        "section": "Project",
+        "question": "Project 1 & Project 2"
+      },
+      {
+        "text": "See a list of datasets here: https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/week_7_project/datasets.md",
+        "section": "Project",
+        "question": "Does anyone know nice and relatively large datasets?"
+      },
+      {
+        "text": "You need to redefine the python environment variable to that of your user account",
+        "section": "Project",
+        "question": "How to run python as start up script?"
+      },
+      {
+        "text": "Initiate a Spark Session\nspark = (SparkSession\n.builder\n.appName(app_name)\n.master(master=master)\n.getOrCreate())\nspark.streams.resetTerminated()\nquery1 = spark\n.readStream\n\u2026\n\u2026\n.load()\nquery2 = spark\n.readStream\n\u2026\n\u2026\n.load()\nquery3 = spark\n.readStream\n\u2026\n\u2026\n.load()\nquery1.start()\nquery2.start()\nquery3.start()\nspark.streams.awaitAnyTermination() #waits for any one of the query to receive kill signal or error failure. This is asynchronous\n# On the contrary query3.start().awaitTermination() is a blocking ex call. Works well when we are reading only from one topic.",
+        "section": "Project",
+        "question": "Spark Streaming - How do I read from multiple topics in the same Spark Session"
+      },
+      {
+        "text": "Transformed data can be moved in to azure blob storage and then it can be moved in to azure SQL DB, instead of moving directly from databricks to Azure SQL DB.",
+        "section": "Project",
+        "question": "Data Transformation from Databricks to Azure SQL DB"
+      },
+      {
+        "text": "The trial dbt account provides access to dbt API. Job will still be needed to be added manually. Airflow will run the job using a python operator calling the API. You will need to provide api key, job id, etc. (be careful not committing it to Github).\nDetailed explanation here: https://docs.getdbt.com/blog/dbt-airflow-spiritual-alignment\nSource code example here: https://github.com/sungchun12/airflow-toolkit/blob/95d40ac76122de337e1b1cdc8eed35ba1c3051ed/dags/examples/dbt_cloud_example.py",
+        "section": "Project",
+        "question": "Orchestrating dbt with Airflow"
+      },
+      {
+        "text": "https://airflow.apache.org/docs/apache-airflow-providers-google/stable/_api/airflow/providers/google/cloud/operators/dataproc/index.html\nhttps://airflow.apache.org/docs/apache-airflow-providers-google/stable/_modules/airflow/providers/google/cloud/operators/dataproc.html\nGive the following roles to you service account:\nDataProc Administrator\nService Account User (explanation here)\nUse DataprocSubmitPySparkJobOperator, DataprocDeleteClusterOperator and  DataprocCreateClusterOperator.\nWhen using  DataprocSubmitPySparkJobOperator, do not forget to add:\ndataproc_jars = [\"gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.24.0.jar\"]\nBecause DataProc does not already have the BigQuery Connector.",
+        "section": "Project",
+        "question": "Orchestrating DataProc with Airflow"
+      },
+      {
+        "text": "You can trigger your dbt job in Mage pipeline. For this get your dbt cloud api key under settings/Api tokens/personal tokens. Add it safely to  your .env\nFor example\ndbt_api_trigger=dbt_**\nNavigate to job page and find api trigger  link\nThen create a custom mage Python block with a simple http request like here\nfrom dotenv import load_dotenv\nfrom pathlib import Path\ndotenv_path = Path('/home/src/.env')\nload_dotenv(dotenv_path=dotenv_path)\ndbt_api_trigger= os.getenv(dbt_api_trigger)\nurl = f\"https://cloud.getdbt.com/api/v2/accounts/{dbt_account_id}/jobs/<job_id>/run/\"\nheaders = {\n        \"Authorization\": f\"Token {dbt_api_trigger}\",\n        \"Content-Type\": \"application/json\" }\nbody = {\n        \"cause\": \"Triggered via API\"\n    }\n    response = requests.post(url, headers=headers, json=body)\nvoila! You triggered dbt job form your mage pipeline.",
+        "section": "Project",
+        "question": "Orchestrating dbt cloud with Mage"
+      },
+      {
+        "text": "The slack thread : thttps://datatalks-club.slack.com/archives/C01FABYF2RG/p1677678161866999\nThe question is that sometimes even if you take plenty of effort to document every single step, and we can't even sure if the person doing the peer review will be able to follow-up, so how this criteria will be evaluated?\nAlex clarifies: \u201cIdeally yes, you should try to re-run everything. But I understand that not everyone has time to do it, so if you check the code by looking at it and try to spot errors, places with missing instructions and so on - then it's already great\u201d",
+        "section": "Project",
+        "question": "Project evaluation - Reproducibility"
+      },
+      {
+        "text": "The key valut in Azure cloud is used to store credentials or passwords or secrets of different tech stack used in Azure. For example if u do not want to expose the password in SQL database, then we can save the password under a given name and use them in other Azure stack.",
+        "section": "Project",
+        "question": "Key Vault in Azure cloud stack"
+      },
+      {
+        "text": "You can get the version of py4j from inside docker using this command\ndocker exec -it --user airflow airflow-airflow-scheduler-1 bash -c \"ls /opt/spark/python/lib\"",
+        "section": "Project",
+        "question": "Spark docker - `ModuleNotFoundError: No module named 'py4j'` while executing `import pyspark`"
+      },
+      {
+        "text": "Either use conda or pip for managing venv, using both of them together will cause incompatibility.\nIf you\u2019re using conda, install psycopg2 using the conda-forge channel, which may handle the architecture compatibility automatically\nconda install -c conda-forge psycopg2\nIf pip, do the normal install\npip install psycopg2",
+        "section": "Project",
+        "question": "psycopg2 complains of incompatible environment e.g x86 instead of amd"
+      },
+      {
+        "text": "This is not a FAQ but more of an advice if you want to set up dbt locally, I did it in the following way:\nI had the postgres instance from week 2 (year 2024) up (the docker-compose)\nmkdir dbt\nvi dbt/profiles.yml\nAnd here I attached this content (only the required fields) and replaced them with the proper values (for instance mine where in the .env file of the folder of week 2 docker stuff)\ncd dbt && git clone https://github.com/dbt-labs/dbt-starter-project\nmkdir project && cd project && mv dbt-starter-project/* .\nMake sure that you align the profile name in profiles.yml with the dbt_project.yml file\nAdd this line anywhere on the dbt_project.yml file:\nconfig-version: 2\ndocker run --network=mage-zoomcamp_default --mount type=bind,source=/<your-path>/dbt/project,target=/usr/app --mount type=bind,source=/<your-path>/profiles.yml,target=/root/.dbt/profiles.yml ghcr.io/dbt-labs/dbt-postgres ls\nIf you have trouble run\ndocker run --network=mage-zoomcamp_default --mount type=bind,source=/<your-path>/dbt/project,target=/usr/app --mount type=bind,source=/<your-path>/profiles.yml,target=/root/.dbt/profiles.yml ghcr.io/dbt-labs/dbt-postgres debug",
+        "section": "Project",
+        "question": "Setting up dbt locally with Docker and Postgres"
+      },
+      {
+        "text": "The following line should be included in pyspark configuration\n# Example initialization of SparkSession variable\nspark = (SparkSession.builder\n.master(...)\n.appName(...)\n# Add the following configuration\n.config(\"spark.jars.packages\", \"com.google.cloud.spark:spark-3.5-bigquery:0.37.0\")\n)",
+        "section": "Project",
+        "question": "How to connect Pyspark with BigQuery?"
+      },
+      {
+        "text": "Install the astronomer-cosmos package as a dependency. (see Terraform example).\nMake a new folder, dbt/, inside the dags/ folder of your Composer GCP bucket and copy paste your dbt-core project there. (see example)\nEnsure your profiles.yml is configured to authenticate with a service account key. (see BigQuery example)\nCreate a new DAG using the DbtTaskGroup class and a ProfileConfig specifying a profiles_yml_filepath that points to the location of your JSON key file. (see example)\nYour dbt lineage graph should now appear as tasks inside a task group like this:",
+        "section": "Course Management Form for Homeworks",
+        "question": "How to run a dbt-core project as an Airflow Task Group on Google Cloud Composer using a service account JSON key"
+      },
+      {
+        "text": "The display name listed on the leaderboard is an auto-generated randomized name. You can edit it to be a nickname, or your real name, if you prefer. Your entry on the Leaderboard is the one highlighted in teal(?) / light green (?).\nThe Certificate name should be your actual name that you want to appear on your certificate after completing the course.\nThe \"Display on Leaderboard\" option indicates whether you want your name to be listed on the course leaderboard.\nQuestion: Is it possible to create external tables in BigQuery using URLs, such as those from the NY Taxi data website?\nAnswer: Not really, only Bigtable, Cloud Storage, and Google Drive are supported data stores.",
+        "section": "Workshop 1 - dlthub",
+        "question": "Edit Course Profile."
+      },
+      {
+        "text": "Answer: To run the provided code, ensure that the 'dlt[duckdb]' package is installed. You can do this by executing the provided installation command: !pip install dlt[duckdb]. If you\u2019re doing it locally, be sure to also have duckdb pip installed (even before the duckdb package is loaded).",
+        "section": "Workshop 1 - dlthub",
+        "question": "How do I install the necessary dependencies to run the code?"
+      },
+      {
+        "text": "If you are running Jupyter Notebook on a fresh new Codespace or in local machine with a new Virtual Environment, you will need this package to run the starter Jupyter Notebook offered by the teacher. Execute this:\npip install jupyter",
+        "section": "Workshop 1 - dlthub",
+        "question": "Other packages needed but not listed"
+      },
+      {
+        "text": "Alternatively, you can switch to in-file storage with:",
+        "section": "Workshop 1 - dlthub",
+        "question": "How can I use DuckDB In-Memory database with dlt ?"
+      },
+      {
+        "text": "After loading, you should have a total of 8 records, and ID 3 should have age 33\nQuestion: Calculate the sum of ages of all the people loaded as described above\nThe sum of all eight records' respective ages is too big to be in the choices. You need to first filter out the people whose occupation is equal to None in order to get an answer that is close to or present in the given choices. \ud83d\ude03\n----------------------------------------------------------------------------------------\nFIXED = use a raw string and keep the file:/// at the start of your file path\nI'm having an issue with the dlt workshop notebook. The 'Load to Parquet file' section specifically. No matter what I change the file path to, it's still saving the dlt files directly to my C drive.\n# Set the bucket_url. We can also use a local folder\nos.environ['DESTINATION__FILESYSTEM__BUCKET_URL'] = r'file:///content/.dlt/my_folder'\nurl = \"https://storage.googleapis.com/dtc_zoomcamp_api/yellow_tripdata_2009-06.jsonl\"\n# Define your pipeline\npipeline = dlt.pipeline(\npipeline_name='my_pipeline',\ndestination='filesystem',\ndataset_name='mydata'\n)\n# Run the pipeline with the generator we created earlier.\nload_info = pipeline.run(stream_download_jsonl(url), table_name=\"users\", loader_file_format=\"parquet\")\nprint(load_info)\n# Get a list of all Parquet files in the specified folder\nparquet_files = glob.glob('/content/.dlt/my_folder/mydata/users/*.parquet')\n# show parquet files\nfor file in parquet_files:\nprint(file)",
+        "section": "Workshop 2 - RisingWave",
+        "question": "Homework - dlt Exercise 3 - Merge a generator concerns"
+      },
+      {
+        "text": "Check the contents of the repository with ls - the command.sh file should be in the root folder\nIf it is not, verify that you had cloned the correct repository - https://github.com/risingwavelabs/risingwave-data-talks-workshop-2024-03-04",
+        "section": "Workshop 2 - RisingWave",
+        "question": "command.sh Error - source: no such file or directory: command.sh"
+      },
+      {
+        "text": "psql is a command line tool that is installed alongside PostgreSQL DB, but since we've always been running PostgreSQL in a container, you've only got `pgcli`, which lacks the feature to run a sql script into the DB. Besides, having a command line for each database flavor you'll have to deal with as a Data Professional is far from ideal.\nSo, instead, you can use usql. Check the docs for details on how to install for your OS. On macOS, it supports `homebrew`, and on Windows, it supports scoop.\nSo, to run the taxi_trips.sql script with usql:",
+        "section": "Workshop 2 - RisingWave",
+        "question": "psql - command not found: psql (alternative install)"
+      }
+    ]
+  }
+]
