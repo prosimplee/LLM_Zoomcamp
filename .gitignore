@@ -4,3 +4,5 @@ __pycache__
 minsearch.py
 ollama_files
 .idea
+03-vector-search/ground-truth-data.csv
+03-vector-search/ground-truth-data.csv_
