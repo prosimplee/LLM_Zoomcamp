@@ -6,3 +6,4 @@ ollama_files
 .idea
 03-vector-search/ground-truth-data.csv
 03-vector-search/ground-truth-data.csv_
+results_df_gpt3_5turbo.csv
