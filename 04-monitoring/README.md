@@ -1,4 +1,4 @@
-**To use this application using the UI**:
+**To use this application through the UI**:
 
 1. Export the __POSTGRES_HOST='localhost'__ variable.
 2. Enter the Ollama container and pull the __gemma:2b__ model.
