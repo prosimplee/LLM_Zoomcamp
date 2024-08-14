@@ -1,6 +1,6 @@
 **To use this application using the UI**:
 
-1. Export the POSTGRES_HOST='localhost' variable.
+1. Export the __POSTGRES_HOST='localhost'__ variable.
 2. Enter the Ollama container and pull the __gemma:2b__ model.
 3. Run the prep.py script to index the documents and initialize the Postgres database (this script only needs to be run once).
    If you run it multiple times, it will not execute, so you'll need to delete the volumes first and then try running it again.
