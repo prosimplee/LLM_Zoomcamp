@@ -7,3 +7,6 @@
 4. Use the UI to ask your questions:
    
 ![image](https://github.com/user-attachments/assets/c4f4fc5b-b679-4733-931c-f4ebabb2cf00)
+
+Dashboard of monitoring using Grafana:
+![image](https://github.com/user-attachments/assets/d358a493-cd7e-4c71-81b4-9619beeb04a2)
