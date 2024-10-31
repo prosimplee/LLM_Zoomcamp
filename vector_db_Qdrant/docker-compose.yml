@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  qdrant:
+    image: qdrant/qdrant
+    container_name: qdrant-single-node
+    ports:
+      - "6333:6333"
+    environment:
+      QDRANT__SERVICE__HTTP_PORT: 6333
+      QDRANT__CLUSTER__ENABLE: "false"  # Disable clustering as we are using a single node
+    volumes:
+      - qdrant_data:/qdrant/storage  # Optional: Persist data locally
+
+volumes:
+  qdrant_data:
